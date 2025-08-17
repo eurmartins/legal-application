@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.io.github.eurmartins.demo.enums.Role;
+import com.io.github.eurmartins.demo.enums.UserType;
 
 @Entity
 @Data
@@ -16,16 +16,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
-    private String nome;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String senha;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column(name = "role")
+    @Column(name = "userType", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserType userType;
 }

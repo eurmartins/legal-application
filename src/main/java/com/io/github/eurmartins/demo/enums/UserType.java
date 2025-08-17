@@ -1,6 +1,6 @@
 package com.io.github.eurmartins.demo.enums;
 
-public enum Role {
+public enum UserType {
     ADMIN(1),
     LAWYER(2),
     ANALYST(3),
@@ -8,7 +8,7 @@ public enum Role {
 
     private final int code;
 
-    Role(int code) {
+    UserType(int code) {
         this.code = code;
     }
 
@@ -16,10 +16,10 @@ public enum Role {
         return code;
     }
 
-    public static Role valueOf(int code) {
-        for (Role role : Role.values()) {
-            if (role.getCode() == code) {
-                return role;
+    public static UserType valueOf(int code) {
+        for (UserType userType : UserType.values()) {
+            if (userType.getCode() == code) {
+                return userType;
             }
         }
         throw new IllegalArgumentException("Código de role inválido: " + code);
