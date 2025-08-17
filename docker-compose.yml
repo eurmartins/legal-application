@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  legalapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/legalapp
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
+    depends_on:
+      - mysql-check
+    restart: unless-stopped
+
+  mysql-check:
+    image: mysql:latest
+    command: >
+      sh -c "
+        until mysqladmin ping -h host.docker.internal -P 3306 --silent; do
+          echo 'Aguardando MySQL estar disponível...';
+          sleep 2;
+        done;
+        echo 'MySQL está disponível!';
+      "
+    restart: "no"
+
+networks:
+  default:
+    driver: bridge
